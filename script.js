@@ -8,6 +8,16 @@ const allSpecialCharacters = ["!","\"", "#", "$", "%", "&", "\'", "(", ")", "*",
 var theOneBigArray = new Array;
 var unshuffledPassWord = new Array;
 
+while(true){
+  let passWordLength = window.prompt("How long should the password be?");
+  if (passWordLength > 128 || passWordLength < 8){
+    window.alert(passWordLength + " is no good.\nThe length has to be a number, between 8 and 128.");
+  } else{
+    window.alert("Password length set to " + passWordLength + " characters.");
+    break;
+  }
+}
+
 while(true) {
   let userPrefNumerals = window.prompt("Include numbers?");
   if (userPrefNumerals.toLowerCase() === "yes"
