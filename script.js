@@ -5,20 +5,31 @@ const allLowerCaseLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "
 const allUpperCaseLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 const allSpecialCharacters = ["!","\"", "#", "$", "%", "&", "\'", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "\\", "]", "^", "_", "`", "{", "|", "}", "~"];
 
+// I'm pretty sure the special characters "\" and """ work, but I'm not positive
+
 var theOneBigArray = new Array;
 var unshuffledPassWord = new Array;
+var lengthGetter = new Number;
 
-while(true){
-  let passWordLength = window.prompt("How long should the password be?");
-  if (passWordLength > 128 || passWordLength < 8){
-    window.alert(passWordLength + " is no good.\nThe length has to be a number, between 8 and 128.");
-  } else{
-    window.alert("Password length set to " + passWordLength + " characters.");
-    break;
+function getLength() {
+  while(lengthGetter > 128 || lengthGetter < 8) {
+    let lengthGetter = window.prompt("How long should the password be?");
+    if (lengthGetter > 128 || lengthGetter < 8){
+      window.alert(lengthGetter + " is no good.\nThe length has to be a number, between 8 and 128.");
+    } else {
+      window.alert("Password length set to " + lengthGetter + " characters.");
+      return lengthGetter;
+    }
   }
 }
 
-while(true) {
+/*
+function getContent() {} //the function that asks to include numbers/characters/etc. or not
+*/
+
+const passWordLength = getLength();
+
+while(unshuffledPassWord.length < passWordLength) { // change to whilt(true) when you make it a function
   let userPrefNumerals = window.prompt("Include numbers?");
   if (userPrefNumerals.toLowerCase() === "yes"
    || userPrefNumerals.toLowerCase() === "y"){
@@ -37,7 +48,7 @@ while(true) {
   }
 }
 
-while(true) {
+while(unshuffledPassWord.length < passWordLength) {
   let userPrefLowerCase = window.prompt("Include lowercase letters?");
   if (userPrefLowerCase.toLowerCase() === "yes"
    || userPrefLowerCase.toLowerCase() === "y"){
@@ -56,7 +67,7 @@ while(true) {
   }
 }
 
-while(true) {
+while(unshuffledPassWord.length < passWordLength) {
   let userPrefUpperCase = window.prompt("Include uppercase letters?");
   if (userPrefUpperCase.toLowerCase() === "yes"
    || userPrefUpperCase.toLowerCase() === "y"){
@@ -75,7 +86,7 @@ while(true) {
   }
 }
 
-while(true) {
+while(unshuffledPassWord.length < passWordLength) {
   let userPrefSpecials = window.prompt("Include special characters?");
   if (userPrefSpecials.toLowerCase() === "yes"
    || userPrefSpecials.toLowerCase() === "y"){
@@ -94,6 +105,13 @@ while(true) {
   }
 }
 
+for(i = 0; i < passWordLength; i++){
+  var index = Math.floor(Math.random() * theOneBigArray.length);
+  var thePushedCharacter = theOneBigArray[index];
+  unshuffledPassWord.push(thePushedCharacter);
+  }
+
+console.log(passWordLength); //just for testing
 console.log(theOneBigArray); //just for testing
 console.log(unshuffledPassWord); //just for testing
 
