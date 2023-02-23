@@ -1,46 +1,12 @@
 # Password Generator
 
-# Plan
+# To do:
 
-make an array of all uppercase letters
-make an array of all lowercase letters
-make an array of all numbers
-make an array of all special characters
+Make the program wait on the button click (instead of starting on its own with window.alerts)
 
-determine which arrays to combine (based on user input)
-merge the appropriate arrays into theOneBigArray (use concat() or something)
+Make the program display the password in the appropriate field
 
-determine how long the password is (based on user input)
-make a for loop something like:
-
-for desiredLength (i = 0; i < desiredLength; i++){
-  var index = Math.floor(Math.random() * oneBigArray.length);
-  var thePushedCharacter = theOneBigArray[index];
-  secretPassWord.push(thePushedCharacter);
-  }
-
-I didn't spell any of those commands right, but that should do it
-
-Except I need at least 1 character from each chosen set, therefore:
-
-For each desired character set:
-Option A:
-pick a random character from that set
-put it in a random spot in the array (replace what's there)
-disqualify that spot from future random-putting
-Option B:
-check to see if that array and theOneBigArray have *any* elements in common
-if they have nothing in common, do it again
-
-And then, figure out user prompts
-
-if (arrayWithOnlyYesOrNo.includes(userAnswer)) == false{
-  window.alert("yay!")
-  ...move on somehow
-} else {
-  window.alert("that is not an option");
-  ...ask again somehow
-}
+Maybe also: make the interface pretty boxes, instead of ugly window.alerts
 
 # Acceptance Criteria for this project:
 
