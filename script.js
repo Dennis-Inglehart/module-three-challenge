@@ -7,12 +7,13 @@ const allSpecialCharacters = ["!","\"", "#", "$", "%", "&", "\'", "(", ")", "*",
 
 // I'm pretty sure the special characters "\" and """ work, but I'm not positive
 
-var lengthGetter = new Number;
-var lowerBound = new Number;
-var upperBound = new Number;
-var theOneBigArray = new Array;
-var unshuffledPassWord = new Array;
-var arrayThatIsNotRandomEnough = new Array;
+var lengthGetter = new Number; // used by getLength
+var lowerBound = new Number; // used by getLength
+var upperBound = new Number; // used by getLength
+var theOneBigArray = new Array; // the entire list of characters that the password will be made out of; used often
+var unshuffledPassWord = new Array; // used by getContent and populateUnshuffledPassword
+var arrayThatIsNotRandomEnough = new Array; // used by theFamousFisherYatesArrayShuffler
+var secretPassWord = new Array; // the end result of clicking the red "Generate Password" button
 
 function getLength(lowerBound, upperBound) { // asks for password length
   while(lengthGetter > upperBound || lengthGetter < lowerBound) {
@@ -48,7 +49,7 @@ function getContent(characterSetArray, characterSetMoniker) {
       window.alert("Not including " + characterSetMoniker);
       break;
     } else {
-      window.alert("Please choose a 'yes' or 'no' answer.")
+      window.alert("Please choose a 'yes' or 'no' answer.");
     }
   }
 }
@@ -68,16 +69,25 @@ function theFamousFisherYatesArrayShuffler(arrayThatIsNotRandomEnough) { // rand
     arrayThatIsNotRandomEnough[i] = arrayThatIsNotRandomEnough[randomIndex];
     arrayThatIsNotRandomEnough[randomIndex] = iDoppleganger;
   }
-  return;
+  return arrayThatIsNotRandomEnough;
 }
 
 var passWordLength = getLength(8, 128);
-getContent(allArabicNumerals, "numbers");
-getContent(allLowerCaseLetters, "lowercase letters");
-getContent(allUpperCaseLetters, "uppercase letters");
-getContent(allSpecialCharacters, "special characters");
+
+while (true){ // gets user input on which character set(s) to include
+  getContent(allArabicNumerals, "numbers");
+  getContent(allLowerCaseLetters, "lowercase letters");
+  getContent(allUpperCaseLetters, "uppercase letters");
+  getContent(allSpecialCharacters, "special characters");
+  if (theOneBigArray.length < 1){ // rejects user input if theOneBigArray is so small, it must be too small to include even one character set
+    window.alert("There are still no ingredients to make a password out of!\nPlease go through again, but say 'yes' for at least one set of characters this time.");
+  } else {
+    break;
+  }
+}
+
 populateUnshuffledPassword();
-theFamousFisherYatesArrayShuffler(unshuffledPassWord);
+var secretPassWord = theFamousFisherYatesArrayShuffler(unshuffledPassWord);
 
 // End assignment code
 
