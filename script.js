@@ -7,14 +7,17 @@ const allSpecialCharacters = ["!","\"", "#", "$", "%", "&", "\'", "(", ")", "*",
 
 // I'm pretty sure the special characters "\" and """ work, but I'm not positive
 
+var lengthGetter = new Number;
+var lowerBound = new Number;
+var upperBound = new Number;
 var theOneBigArray = new Array;
 var unshuffledPassWord = new Array;
-var lengthGetter = new Number;
+var arrayThatIsNotRandomEnough = new Array;
 
-function getLength() {
-  while(lengthGetter > 128 || lengthGetter < 8) {
+function getLength(lowerBound, upperBound) { // asks for password length
+  while(lengthGetter > upperBound || lengthGetter < lowerBound) {
     let lengthGetter = window.prompt("How long should the password be?");
-    if (lengthGetter > 128 || lengthGetter < 8){
+    if (lengthGetter > upperBound || lengthGetter < lowerBound || isNaN(lengthGetter)){
       window.alert(lengthGetter + " is no good.\nThe length has to be a number, between 8 and 128.");
     } else {
       window.alert("Password length set to " + lengthGetter + " characters.");
@@ -23,97 +26,58 @@ function getLength() {
   }
 }
 
-/*
-function getContent() {} //the function that asks to include numbers/characters/etc. or not
-*/
+/* asks whether to include certain character sets or not
+   if a set is chosen to be included, that set is added to theOneBigArray
+   also: to make sure that, ultimately, the password has at least one character from each set, this function also adds one character from the chosen set to the password (if the set was chosen)
+   because of the way this function adds characters, their position is predictable, and therefore the password is less secure; to cover that weakness, the password is later shuffled */
 
-const passWordLength = getLength();
-
-while(unshuffledPassWord.length < passWordLength) { // change to whilt(true) when you make it a function
-  let userPrefNumerals = window.prompt("Include numbers?");
-  if (userPrefNumerals.toLowerCase() === "yes"
-   || userPrefNumerals.toLowerCase() === "y"){
-    window.alert("Including numbers.");
-    theOneBigArray = theOneBigArray.concat(allArabicNumerals);
-    var index = Math.floor(Math.random() * allArabicNumerals.length);
-    var thePushedCharacter = allArabicNumerals[index];
-    unshuffledPassWord.push(thePushedCharacter);
-    break;
-  } else if (userPrefNumerals.toLowerCase() === "no"
-   || userPrefNumerals === "n"){
-    window.alert("Not including numbers.");
-    break;
-  } else {
-    window.alert("Please choose a 'yes' or 'no' answer.")
+function getContent(characterSetArray, characterSetMoniker) {
+  while(true){
+    let userPref = window.prompt("Include " + characterSetMoniker + "?");
+    if(userPref.toLowerCase() === "yes"
+    || userPref.toLowerCase() === "y"){
+      window.alert("Including " + characterSetMoniker + ".")
+      theOneBigArray = theOneBigArray.concat(characterSetArray);
+      var index = Math.floor(Math.random() * characterSetArray.length);
+      var thePushedCharacter = characterSetArray[index];
+      unshuffledPassWord.push(thePushedCharacter);
+      --passWordLength;
+      break;
+    } else if (userPref.toLowerCase() === "no"
+    || userPref === "n"){
+      window.alert("Not including " + characterSetMoniker);
+      break;
+    } else {
+      window.alert("Please choose a 'yes' or 'no' answer.")
+    }
   }
 }
 
-while(unshuffledPassWord.length < passWordLength) {
-  let userPrefLowerCase = window.prompt("Include lowercase letters?");
-  if (userPrefLowerCase.toLowerCase() === "yes"
-   || userPrefLowerCase.toLowerCase() === "y"){
-    window.alert("Including lowercase letters.");
-    theOneBigArray = theOneBigArray.concat(allLowerCaseLetters);
-    var index = Math.floor(Math.random() * allLowerCaseLetters.length);
-    var thePushedCharacter = allLowerCaseLetters[index];
+function populateUnshuffledPassword() { // makes up a password out of random characters from theOneBigArray
+  for(i = 0; i < passWordLength; i++){
+    var randomIndex = Math.floor(Math.random() * theOneBigArray.length);
+    var thePushedCharacter = theOneBigArray[randomIndex];
     unshuffledPassWord.push(thePushedCharacter);
-    break;
-  } else if (userPrefLowerCase.toLowerCase() === "no"
-   || userPrefLowerCase === "n"){
-    window.alert("Not including lowercase letters.");
-    break;
-  } else {
-    window.alert("Please choose a 'yes' or 'no' answer.")
   }
 }
 
-while(unshuffledPassWord.length < passWordLength) {
-  let userPrefUpperCase = window.prompt("Include uppercase letters?");
-  if (userPrefUpperCase.toLowerCase() === "yes"
-   || userPrefUpperCase.toLowerCase() === "y"){
-    window.alert("Including uppercase letters.");
-    theOneBigArray = theOneBigArray.concat(allUpperCaseLetters);
-    var index = Math.floor(Math.random() * allUpperCaseLetters.length);
-    var thePushedCharacter = allUpperCaseLetters[index];
-    unshuffledPassWord.push(thePushedCharacter);
-    break;
-  } else if (userPrefUpperCase.toLowerCase() === "no"
-   || userPrefUpperCase === "n"){
-    window.alert("Not including uppercase letters.");
-    break;
-  } else {
-    window.alert("Please choose a 'yes' or 'no' answer.")
+function theFamousFisherYatesArrayShuffler(arrayThatIsNotRandomEnough) { // randomizes the order of characters in the password
+  for (i = arrayThatIsNotRandomEnough.length - 1; i > 0; i--){
+    randomIndex = Math.floor(Math.random() * i);
+    iDoppleganger = arrayThatIsNotRandomEnough[i];
+    arrayThatIsNotRandomEnough[i] = arrayThatIsNotRandomEnough[randomIndex];
+    arrayThatIsNotRandomEnough[randomIndex] = iDoppleganger;
   }
+  return;
 }
 
-while(unshuffledPassWord.length < passWordLength) {
-  let userPrefSpecials = window.prompt("Include special characters?");
-  if (userPrefSpecials.toLowerCase() === "yes"
-   || userPrefSpecials.toLowerCase() === "y"){
-    window.alert("Including special characters.");
-    theOneBigArray = theOneBigArray.concat(allSpecialCharacters);
-    var index = Math.floor(Math.random() * allSpecialCharacters.length);
-    var thePushedCharacter = allSpecialCharacters[index];
-    unshuffledPassWord.push(thePushedCharacter);
-    break;
-  } else if (userPrefSpecials.toLowerCase() === "no"
-   || userPrefSpecials === "n"){
-    window.alert("Not including special characters.");
-    break;
-  } else {
-    window.alert("Please choose a 'yes' or 'no' answer.")
-  }
-}
-
-for(i = 0; i < passWordLength; i++){
-  var index = Math.floor(Math.random() * theOneBigArray.length);
-  var thePushedCharacter = theOneBigArray[index];
-  unshuffledPassWord.push(thePushedCharacter);
-  }
-
-console.log(passWordLength); //just for testing
-console.log(theOneBigArray); //just for testing
-console.log(unshuffledPassWord); //just for testing
+var passWordLength = getLength(8, 128);
+getContent(allArabicNumerals, "numbers");
+getContent(allLowerCaseLetters, "lowercase letters");
+getContent(allUpperCaseLetters, "uppercase letters");
+getContent(allSpecialCharacters, "special characters");
+populateUnshuffledPassword();
+theFamousFisherYatesArrayShuffler(unshuffledPassWord);
 
 // End assignment code
 
