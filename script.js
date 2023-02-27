@@ -1,12 +1,9 @@
-// Begin assignment code
+var generateBtn = document.querySelector("#generate"); // Get references to the #generate element (this line was starter code)
 
 const allArabicNumerals = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 const allLowerCaseLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 const allUpperCaseLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 const allSpecialCharacters = ["!","\"", "#", "$", "%", "&", "\'", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "\\", "]", "^", "_", "`", "{", "|", "}", "~"];
-
-// I'm pretty sure the special characters "\" and """ work, but I'm not positive
-
 var lengthGetter = new Number; // used by getLength
 var lowerBound = new Number; // used by getLength
 var upperBound = new Number; // used by getLength
@@ -14,6 +11,14 @@ var theOneBigArray = new Array; // the entire list of characters that the passwo
 var unshuffledPassWord = new Array; // used by getContent and populateUnshuffledPassword
 var arrayThatIsNotRandomEnough = new Array; // used by theFamousFisherYatesArrayShuffler
 var secretPassWord = new Array; // the end result of clicking the red "Generate Password" button
+
+function writePassword() { // Write password to the #password input (this function was starter code)
+  var password = generatePassword(); 
+  var passwordText = document.querySelector("#password");
+  passwordText.value = password;
+}
+
+function generatePassword() { // The big function that the starter code implicitly recommended
 
 function getLength(lowerBound, upperBound) { // asks for password length
   while(lengthGetter > upperBound || lengthGetter < lowerBound) {
@@ -29,8 +34,14 @@ function getLength(lowerBound, upperBound) { // asks for password length
 
 /* asks whether to include certain character sets or not
    if a set is chosen to be included, that set is added to theOneBigArray
+<<<<<<< HEAD
+   
    also: to make sure that, ultimately, the password has at least one character from each set, this function also adds one character from the chosen set to the password (if the set was chosen)
+   because of the way this function adds characters, their position is predictable, and therefore the password is less secure; to cover for that weakness, the password is later shuffled */
+=======
+   also: to make sure that, ultimately, the password has at least one character from each set, this function also adds one character from the any set chosen by the user to the password
    because of the way this function adds characters, their position is predictable, and therefore the password is less secure; to cover that weakness, the password is later shuffled */
+>>>>>>> 05fb1af135a4e5576cc12f29a4b51b88a11c4190
 
 function getContent(characterSetArray, characterSetMoniker) {
   while(true){
@@ -72,7 +83,7 @@ function theFamousFisherYatesArrayShuffler(arrayThatIsNotRandomEnough) { // rand
   return arrayThatIsNotRandomEnough;
 }
 
-var passWordLength = getLength(8, 128);
+var passWordLength = getLength(8, 128); // gets user input on password length
 
 while (true){ // gets user input on which character set(s) to include
   getContent(allArabicNumerals, "numbers");
@@ -82,26 +93,16 @@ while (true){ // gets user input on which character set(s) to include
   if (theOneBigArray.length < 1){ // rejects user input if theOneBigArray is so small, it must be too small to include even one character set
     window.alert("There are still no ingredients to make a password out of!\nPlease go through again, but say 'yes' for at least one set of characters this time.");
   } else {
+    window.alert("This is your password.\nKeep it secret. Keep it safe.");
     break;
   }
 }
 
 populateUnshuffledPassword();
-var secretPassWord = theFamousFisherYatesArrayShuffler(unshuffledPassWord);
-
-// End assignment code
-
-// Get references to the #generate element
-var generateBtn = document.querySelector("#generate");
-
-// Write password to the #password input
-function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
-
-  passwordText.value = password;
+var secretPassWordArray = theFamousFisherYatesArrayShuffler(unshuffledPassWord);
+var secretPassWordString = secretPassWordArray.join("");
+return secretPassWordString;
 
 }
 
-// Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
+generateBtn.addEventListener("click", writePassword); // Add event listener to generate button (this line was starter code)
