@@ -8,3 +8,4 @@ In the current version, the Password Generator does not force the user to includ
 
 # A screenshot of the Password Generator in a normal window:
 
+![module three challenge screencap](/readme-screencap.png)
