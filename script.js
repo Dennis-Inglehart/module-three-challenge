@@ -29,8 +29,9 @@ function getLength(lowerBound, upperBound) { // asks for password length
 
 /* asks whether to include certain character sets or not
    if a set is chosen to be included, that set is added to theOneBigArray
+   
    also: to make sure that, ultimately, the password has at least one character from each set, this function also adds one character from the chosen set to the password (if the set was chosen)
-   because of the way this function adds characters, their position is predictable, and therefore the password is less secure; to cover that weakness, the password is later shuffled */
+   because of the way this function adds characters, their position is predictable, and therefore the password is less secure; to cover for that weakness, the password is later shuffled */
 
 function getContent(characterSetArray, characterSetMoniker) {
   while(true){
